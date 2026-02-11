@@ -1,0 +1,48 @@
+import { LangDict } from './default'
+
+export default {
+  es_ES: {
+    0: '¡Iniciando Spliit!',
+    1: 'Base de datos',
+    2: 'Esperando a que PostgreSQL esté listo',
+    3: 'PostgreSQL está listo',
+    4: 'Interfaz web',
+    5: 'Spliit está listo',
+    6: 'Spliit no está listo',
+    7: 'Interfaz web',
+    8: 'La interfaz web de Spliit para gestionar gastos compartidos',
+  },
+  de_DE: {
+    0: 'Starte Spliit!',
+    1: 'Datenbank',
+    2: 'Warte auf PostgreSQL-Bereitschaft',
+    3: 'PostgreSQL ist bereit',
+    4: 'Weboberfläche',
+    5: 'Spliit ist bereit',
+    6: 'Spliit ist nicht bereit',
+    7: 'Weboberfläche',
+    8: 'Die Spliit-Weboberfläche zur Verwaltung gemeinsamer Ausgaben',
+  },
+  pl_PL: {
+    0: 'Uruchamianie Spliit!',
+    1: 'Baza danych',
+    2: 'Oczekiwanie na gotowość PostgreSQL',
+    3: 'PostgreSQL jest gotowy',
+    4: 'Interfejs webowy',
+    5: 'Spliit jest gotowy',
+    6: 'Spliit nie jest gotowy',
+    7: 'Interfejs webowy',
+    8: 'Interfejs webowy Spliit do zarządzania wspólnymi wydatkami',
+  },
+  fr_FR: {
+    0: 'Démarrage de Spliit !',
+    1: 'Base de données',
+    2: 'En attente de la disponibilité de PostgreSQL',
+    3: 'PostgreSQL est prêt',
+    4: 'Interface web',
+    5: 'Spliit est prêt',
+    6: "Spliit n'est pas prêt",
+    7: 'Interface web',
+    8: "L'interface web de Spliit pour gérer les dépenses partagées",
+  },
+} satisfies Record<string, LangDict>

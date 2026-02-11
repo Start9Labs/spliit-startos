@@ -1,9 +1,10 @@
+import { i18n } from './i18n'
 import { sdk } from './sdk'
 import { uiPort, postgresPort, postgresUser, postgresDb } from './utils'
 import { storeJson } from './fileModels/store.json'
 
 export const main = sdk.setupMain(async ({ effects }) => {
-  console.info('Starting Spliit!')
+  console.info(i18n('Starting Spliit!'))
 
   // Read stored configuration
   const store = await storeJson.read((s) => s).const(effects)
@@ -45,7 +46,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
         },
       },
       ready: {
-        display: 'Database',
+        display: i18n('Database'),
         fn: async () => {
           const { exitCode } = await postgresSub.exec([
             'pg_isready',
@@ -60,12 +61,12 @@ export const main = sdk.setupMain(async ({ effects }) => {
           if (exitCode !== 0) {
             return {
               result: 'loading',
-              message: 'Waiting for PostgreSQL to be ready',
+              message: i18n('Waiting for PostgreSQL to be ready'),
             }
           }
           return {
             result: 'success',
-            message: 'PostgreSQL is ready',
+            message: i18n('PostgreSQL is ready'),
           }
         },
       },
@@ -82,11 +83,11 @@ export const main = sdk.setupMain(async ({ effects }) => {
         },
       },
       ready: {
-        display: 'Web Interface',
+        display: i18n('Web Interface'),
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, uiPort, {
-            successMessage: 'Spliit is ready',
-            errorMessage: 'Spliit is not ready',
+            successMessage: i18n('Spliit is ready'),
+            errorMessage: i18n('Spliit is not ready'),
           }),
       },
       requires: ['postgres'],
