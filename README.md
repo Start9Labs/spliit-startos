@@ -7,8 +7,8 @@
 > **Upstream docs:** <https://github.com/spliit-app/spliit#readme>
 >
 > Everything not listed in this document should behave the same as upstream
-> Spliit v1.19.1. If a feature, setting, or behavior is not mentioned
-> here, the upstream documentation is accurate and fully applicable.
+> Spliit. If a feature, setting, or behavior is not mentioned here, the
+> upstream documentation is accurate and fully applicable.
 
 Spliit is a free and open source alternative to Splitwise for sharing expenses with friends and family. This repository packages it for [StartOS](https://github.com/Start9Labs/start-os).
 
@@ -119,7 +119,6 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development wo
 
 ```yaml
 package_id: spliit
-upstream_version: 1.19.1
 image: built from upstream Dockerfile
 database_image: postgres:16-alpine
 architectures: [x86_64, aarch64]

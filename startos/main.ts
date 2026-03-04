@@ -1,13 +1,15 @@
+import { storeJson } from './fileModels/store.json'
 import { i18n } from './i18n'
 import { sdk } from './sdk'
-import { uiPort, postgresPort, postgresUser, postgresDb } from './utils'
-import { storeJson } from './fileModels/store.json'
+import { postgresDb, postgresPort, postgresUser, uiPort } from './utils'
 
 export const main = sdk.setupMain(async ({ effects }) => {
   console.info(i18n('Starting Spliit!'))
 
   // Read stored configuration
-  const store = await storeJson.read((s) => s).const(effects)
+  const postgresPassword = await storeJson
+    .read((s) => s.postgresPassword)
+    .const(effects)
 
   // Create PostgreSQL subcontainer
   const postgresSub = await sdk.SubContainer.of(
@@ -16,7 +18,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     sdk.Mounts.of().mountVolume({
       volumeId: 'main',
       subpath: 'postgres',
-      mountpoint: '/var/lib/postgresql/data',
+      mountpoint: '/var/lib/postgresql',
       readonly: false,
     }),
     'postgres-sub',
@@ -31,18 +33,17 @@ export const main = sdk.setupMain(async ({ effects }) => {
   )
 
   // Database connection string - use localhost since daemons share the network
-  const databaseUrl = `postgresql://${postgresUser}:${store?.postgresPassword ?? ''}@127.0.0.1:${postgresPort}/${postgresDb}`
+  const databaseUrl = `postgresql://${postgresUser}:${postgresPassword ?? ''}@127.0.0.1:${postgresPort}/${postgresDb}`
 
   return sdk.Daemons.of(effects)
     .addDaemon('postgres', {
       subcontainer: postgresSub,
       exec: {
-        command: sdk.useEntrypoint(),
+        command: sdk.useEntrypoint(['-c', 'listen_addresses=127.0.0.1']),
         env: {
           POSTGRES_USER: postgresUser,
-          POSTGRES_PASSWORD: store?.postgresPassword ?? '',
+          POSTGRES_PASSWORD: postgresPassword ?? '',
           POSTGRES_DB: postgresDb,
-          PGDATA: '/var/lib/postgresql/data/pgdata',
         },
       },
       ready: {
@@ -55,7 +56,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
             '-d',
             postgresDb,
             '-h',
-            'localhost',
+            '127.0.0.1',
           ])
 
           if (exitCode !== 0) {
