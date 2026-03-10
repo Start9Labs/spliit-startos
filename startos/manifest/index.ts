@@ -1,5 +1,5 @@
 import { setupManifest } from '@start9labs/start-sdk'
-import { short, long, alertUninstall } from './i18n'
+import { alertUninstall, long, short } from './i18n'
 
 export const manifest = setupManifest({
   id: 'spliit',
@@ -9,7 +9,7 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/spliit-app/spliit',
   marketingUrl: 'https://spliit.app/',
   donationUrl: 'https://donate.stripe.com/28o3eh96G7hH8k89Ba',
-  docsUrls: ['https://github.com/spliit-app/spliit#readme'],
+  docsUrls: ['https://github.com/spliit-app/spliit/blob/main/README.md'],
   description: { short, long },
   volumes: ['main'],
   images: {
