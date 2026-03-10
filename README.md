@@ -4,7 +4,7 @@
 
 # Spliit on StartOS
 
-> **Upstream docs:** <https://github.com/spliit-app/spliit#readme>
+> **Upstream docs:** <https://github.com/spliit-app/spliit/blob/main/README.md>
 >
 > Everything not listed in this document should behave the same as upstream
 > Spliit. If a feature, setting, or behavior is not mentioned here, the
