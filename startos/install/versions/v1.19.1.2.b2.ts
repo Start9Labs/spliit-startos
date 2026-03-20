@@ -1,7 +1,7 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
-export const v_1_19_1_2_b1 = VersionInfo.of({
-  version: '1.19.1:2-beta.1',
+export const v_1_19_1_2_b2 = VersionInfo.of({
+  version: '1.19.1:2-beta.2',
   releaseNotes: {
     en_US: 'Update to StartOS SDK beta.60',
     es_ES: 'Actualización a StartOS SDK beta.60',
