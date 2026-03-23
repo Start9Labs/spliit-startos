@@ -16,8 +16,8 @@ export const main = sdk.setupMain(async ({ effects }) => {
     effects,
     { imageId: 'postgres' },
     sdk.Mounts.of().mountVolume({
-      volumeId: 'main',
-      subpath: 'postgres',
+      volumeId: 'db',
+      subpath: null,
       mountpoint: '/var/lib/postgresql',
       readonly: false,
     }),

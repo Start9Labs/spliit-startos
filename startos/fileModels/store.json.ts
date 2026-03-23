@@ -6,6 +6,6 @@ const shape = z.object({
 })
 
 export const storeJson = FileHelper.json(
-  { base: sdk.volumes.main, subpath: 'store.json' },
+  { base: sdk.volumes.startos, subpath: 'store.json' },
   shape,
 )

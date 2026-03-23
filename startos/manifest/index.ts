@@ -11,7 +11,7 @@ export const manifest = setupManifest({
   donationUrl: 'https://donate.stripe.com/28o3eh96G7hH8k89Ba',
   docsUrls: ['https://github.com/spliit-app/spliit/blob/main/README.md'],
   description: { short, long },
-  volumes: ['main'],
+  volumes: ['startos', 'db'],
   images: {
     main: {
       source: {

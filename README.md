@@ -45,14 +45,8 @@ Spliit is a free and open source alternative to Splitwise for sharing expenses w
 
 | Volume | Mount Point | Purpose |
 |--------|-------------|---------|
-| `main` (root) | — | StartOS-specific files |
-| `main/postgres` | `/var/lib/postgresql/data` | PostgreSQL data directory |
-
-StartOS-specific files in the `main` volume:
-
-| File | Purpose |
-|------|---------|
-| `store.json` | Stores the auto-generated PostgreSQL password |
+| `startos` | — | StartOS-specific files (`store.json`) |
+| `db` | `/var/lib/postgresql` | PostgreSQL data directory |
 
 ## Installation and First-Run Flow
 
@@ -85,7 +79,7 @@ None.
 
 ## Backups and Restore
 
-The `main` volume is backed up, which includes all PostgreSQL data (expense groups, members, transactions).
+Uses `pg_dump`/`pg_restore` for the database instead of raw volume rsync. The `startos` volume (containing `store.json`) is backed up via rsync. The database dump is written directly to the backup target.
 
 ## Health Checks
 
@@ -123,8 +117,8 @@ image: built from upstream Dockerfile
 database_image: postgres:16-alpine
 architectures: [x86_64, aarch64]
 volumes:
-  main: /
-  main/postgres: /var/lib/postgresql/data
+  startos: store.json
+  db: /var/lib/postgresql
 ports:
   ui: 3000
   postgres: 5432 (internal only)
@@ -133,7 +127,6 @@ startos_managed_env_vars:
   - POSTGRES_USER
   - POSTGRES_PASSWORD
   - POSTGRES_DB
-  - PGDATA
   - POSTGRES_PRISMA_URL
   - POSTGRES_URL_NON_POOLING
   - NEXT_TELEMETRY_DISABLED
@@ -141,6 +134,5 @@ actions: []
 health_checks:
   - pg_isready
   - port_listening: 3000
-backup_volumes:
-  - main
+backup_strategy: pg_dump + volume rsync (startos)
 ```
