@@ -85,6 +85,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
       },
       ready: {
         display: i18n('Web Interface'),
+        gracePeriod: 60000,
         fn: () =>
           sdk.healthCheck.checkPortListening(effects, uiPort, {
             successMessage: i18n('Spliit is ready'),
