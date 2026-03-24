@@ -6,7 +6,8 @@ export const { createBackup, restoreInit } = sdk.setupBackups(async () =>
   sdk.Backups.withPgDump({
     imageId: 'postgres',
     dbVolume: 'db',
-    pgdata: '/var/lib/postgresql/data',
+    mountpoint: '/var/lib/postgresql',
+    pgdataPath: '/data',
     database: postgresDb,
     user: postgresUser,
     password: async () => {
