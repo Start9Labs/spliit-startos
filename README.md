@@ -12,9 +12,6 @@
 
 Spliit is a free and open source alternative to Splitwise for sharing expenses with friends and family. This repository packages it for [StartOS](https://github.com/Start9Labs/start-os).
 
-- **Upstream repo:** <https://github.com/spliit-app/spliit>
-- **Wrapper repo:** <https://github.com/Start9Labs/spliit-startos>
-
 ---
 
 ## Table of Contents
@@ -24,28 +21,34 @@ Spliit is a free and open source alternative to Splitwise for sharing expenses w
 - [Installation and First-Run Flow](#installation-and-first-run-flow)
 - [Configuration Management](#configuration-management)
 - [Network Access and Interfaces](#network-access-and-interfaces)
-- [Actions](#actions-startos-ui)
+- [Actions (StartOS UI)](#actions-startos-ui)
 - [Backups and Restore](#backups-and-restore)
 - [Health Checks](#health-checks)
+- [Dependencies](#dependencies)
 - [Limitations and Differences](#limitations-and-differences)
 - [What Is Unchanged from Upstream](#what-is-unchanged-from-upstream)
+- [Contributing](#contributing)
+- [Quick Reference for AI Consumers](#quick-reference-for-ai-consumers)
 
 ---
 
 ## Image and Container Runtime
 
-| Property | Value |
-|----------|-------|
-| App image | Built from upstream Dockerfile |
-| Database image | `postgres:16-alpine` |
-| Architectures | x86_64, aarch64 |
-| Entrypoint | Upstream default (both images) |
+This package runs **2 containers**:
+
+| Container | Image | Purpose |
+|-----------|-------|---------|
+| main | Built from upstream Dockerfile | Spliit Next.js web application |
+| postgres | `postgres` (Alpine) | PostgreSQL database |
+
+- **Architectures:** x86_64, aarch64
+- **Entrypoint:** Default upstream entrypoints for both containers
 
 ## Volume and Data Layout
 
-| Volume | Mount Point | Purpose |
+| Volume | Mount Point | Contents |
 |--------|-------------|---------|
-| `startos` | — | StartOS-specific files (`store.json`) |
+| `startos` | — | StartOS-specific files (`store.json` with PostgreSQL password) |
 | `db` | `/var/lib/postgresql` | PostgreSQL data directory |
 
 ## Installation and First-Run Flow
@@ -61,17 +64,16 @@ The app is ready to use immediately — no setup wizard or initial configuration
 
 | StartOS-Managed | Upstream-Managed |
 |-----------------|------------------|
-| PostgreSQL credentials (auto-generated) | All expense groups, members, and settings |
-| Database connection strings | — |
-| Telemetry disabled (`NEXT_TELEMETRY_DISABLED=1`) | — |
-
-All application settings are managed through the Spliit web UI, just like upstream.
+| PostgreSQL credentials (auto-generated) | All expense groups, members, and settings (via web UI) |
+| Database connection strings | |
+| Telemetry disabled (`NEXT_TELEMETRY_DISABLED=1`) | |
+| PostgreSQL listens on localhost only | |
 
 ## Network Access and Interfaces
 
-| Interface | Port | Protocol | Purpose |
-|-----------|------|----------|---------|
-| Web UI | 3000 | HTTP | Spliit web application |
+| Interface | ID | Type | Port | Protocol | Purpose |
+|-----------|----|------|------|----------|---------|
+| Web UI | `ui` | ui | 3000 | HTTP | Spliit web application |
 
 ## Actions (StartOS UI)
 
@@ -79,19 +81,27 @@ None.
 
 ## Backups and Restore
 
-Uses `pg_dump`/`pg_restore` for the database instead of raw volume rsync. The `startos` volume (containing `store.json`) is backed up via rsync. The database dump is written directly to the backup target.
+- **Database:** Backed up via `pg_dump` / restored via `pg_restore` (not raw volume copy)
+- **`startos` volume:** Backed up via rsync (contains `store.json`)
+- **Restore behavior:** Database is restored from dump; `store.json` is restored in place
 
 ## Health Checks
 
-| Check | Method | Messages |
-|-------|--------|----------|
-| Database | `pg_isready` command | Ready: "PostgreSQL is ready" |
-| Web Interface | Port listening (3000) | Ready: "Spliit is ready" |
+| Check | Daemon | Method | Grace Period | Messages |
+|-------|--------|--------|--------------|----------|
+| Database | postgres | `pg_isready` command | — | Ready: "PostgreSQL is ready" |
+| Web Interface | spliit | Port listening (3000) | 60 seconds | Ready: "Spliit is ready" |
+
+Daemons start in order: PostgreSQL → Spliit
+
+## Dependencies
+
+None.
 
 ## Limitations and Differences
 
 1. **No riscv64 support** — only x86_64 and aarch64 architectures are supported
-2. **Embedded PostgreSQL** — uses a bundled PostgreSQL 16 instance rather than an external database
+2. **Embedded PostgreSQL** — uses a bundled PostgreSQL instance rather than an external database
 
 ## What Is Unchanged from Upstream
 
@@ -100,8 +110,6 @@ Uses `pg_dump`/`pg_restore` for the database instead of raw volume rsync. The `s
 - Group sharing and collaboration
 - Expense categories and splitting methods
 - Settlement calculations
-
----
 
 ## Contributing
 
@@ -113,15 +121,13 @@ See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development wo
 
 ```yaml
 package_id: spliit
-image: built from upstream Dockerfile
-database_image: postgres:16-alpine
+image: built from upstream Dockerfile, postgres (Alpine)
 architectures: [x86_64, aarch64]
 volumes:
   startos: store.json
   db: /var/lib/postgresql
 ports:
   ui: 3000
-  postgres: 5432 (internal only)
 dependencies: none
 startos_managed_env_vars:
   - POSTGRES_USER
@@ -131,8 +137,4 @@ startos_managed_env_vars:
   - POSTGRES_URL_NON_POOLING
   - NEXT_TELEMETRY_DISABLED
 actions: []
-health_checks:
-  - pg_isready
-  - port_listening: 3000
-backup_strategy: pg_dump + volume rsync (startos)
 ```
