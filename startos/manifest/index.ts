@@ -5,7 +5,7 @@ export const manifest = setupManifest({
   id: 'spliit',
   title: 'Spliit',
   license: 'MIT',
-  packageRepo: 'https://github.com/Start9Labs/spliit-startos/tree/update/040',
+  packageRepo: 'https://github.com/Start9Labs/spliit-startos',
   upstreamRepo: 'https://github.com/spliit-app/spliit',
   marketingUrl: 'https://spliit.app/',
   donationUrl: 'https://donate.stripe.com/28o3eh96G7hH8k89Ba',
