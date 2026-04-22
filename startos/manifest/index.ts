@@ -15,9 +15,7 @@ export const manifest = setupManifest({
   images: {
     main: {
       source: {
-        dockerBuild: {
-          workdir: './spliit',
-        },
+        dockerBuild: {},
       },
       arch: ['x86_64', 'aarch64'],
     },
