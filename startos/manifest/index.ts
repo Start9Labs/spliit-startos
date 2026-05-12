@@ -9,7 +9,6 @@ export const manifest = setupManifest({
   upstreamRepo: 'https://github.com/spliit-app/spliit',
   marketingUrl: 'https://spliit.app/',
   donationUrl: 'https://donate.stripe.com/28o3eh96G7hH8k89Ba',
-  docsUrls: ['https://github.com/spliit-app/spliit/blob/main/README.md'],
   description: { short, long },
   volumes: ['startos', 'db'],
   images: {
