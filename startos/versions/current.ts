@@ -1,6 +1,6 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
-export const v_1_19_1_0 = VersionInfo.of({
+export const current = VersionInfo.of({
   version: '1.19.1:0',
   releaseNotes: {
     en_US: 'Updates Spliit to 1.19.1.',
