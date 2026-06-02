@@ -1,6 +1,6 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
-export const v_1_19_0_4 = VersionInfo.of({
+export const current = VersionInfo.of({
   version: '1.19.0:4',
   releaseNotes: {
     en_US: 'Fixes a bug that caused database backups to be empty.',
