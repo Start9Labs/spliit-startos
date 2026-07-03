@@ -12,7 +12,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
     .const(effects)
 
   // Create PostgreSQL subcontainer
-  const postgresSub = await sdk.SubContainer.of(
+  const postgresSub = sdk.SubContainer.of(
     effects,
     { imageId: 'postgres' },
     sdk.Mounts.of().mountVolume({
@@ -25,7 +25,7 @@ export const main = sdk.setupMain(async ({ effects }) => {
   )
 
   // Create Spliit app subcontainer
-  const appSub = await sdk.SubContainer.of(
+  const appSub = sdk.SubContainer.of(
     effects,
     { imageId: 'main' },
     sdk.Mounts.of(),

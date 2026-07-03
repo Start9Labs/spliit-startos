@@ -18,16 +18,3 @@ export const long = {
   fr_FR:
     'Spliit est une alternative gratuite et open source à Splitwise. Partagez les dépenses avec vos amis et votre famille. Créez des groupes pour les voyages, événements, cadeaux et plus encore. Suivez qui doit quoi et réglez facilement.',
 }
-
-export const alertUninstall = {
-  en_US:
-    'Uninstalling Spliit will delete all expense data. Make sure to export any data you want to keep.',
-  es_ES:
-    'Desinstalar Spliit eliminará todos los datos de gastos. Asegúrate de exportar los datos que quieras conservar.',
-  de_DE:
-    'Die Deinstallation von Spliit löscht alle Ausgabendaten. Stelle sicher, dass du alle Daten exportierst, die du behalten möchtest.',
-  pl_PL:
-    'Odinstalowanie Spliit usunie wszystkie dane o wydatkach. Upewnij się, że wyeksportowałeś dane, które chcesz zachować.',
-  fr_FR:
-    "La désinstallation de Spliit supprimera toutes les données de dépenses. Assurez-vous d'exporter les données que vous souhaitez conserver.",
-}
