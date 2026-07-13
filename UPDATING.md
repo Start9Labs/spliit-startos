@@ -1,16 +1,19 @@
 # Updating the upstream version
 
-This package pulls two prebuilt images: Spliit itself from GHCR (built and published by upstream on every git tag) and Postgres from Docker Hub. Both pins live in `startos/manifest/index.ts`.
+This package pulls two prebuilt images: Spliit itself from GHCR and Postgres from Docker Hub. Both pins live in `startos/manifest/index.ts`.
 
 ## Determining the upstream version
 
 **Spliit** — [`spliit-app/spliit`](https://github.com/spliit-app/spliit)
 
+**Upstream does not publish a GHCR image for every GitHub release — read the image tags, not the release list.** Release `1.19.1` (Dec 2025) has no image and never got one; pinning it from the release tag broke the build until the pin was reverted to `1.19.0`.
+
 ```sh
-gh release view -R spliit-app/spliit --json tagName -q .tagName
+token=$(curl -fsSL "https://ghcr.io/token?scope=repository:spliit-app/spliit:pull&service=ghcr.io" | jq -r .token)
+curl -fsSL -H "Authorization: Bearer $token" "https://ghcr.io/v2/spliit-app/spliit/tags/list" | jq -r '.tags[]'
 ```
 
-The release tag matches the image tag published at `ghcr.io/spliit-app/spliit:<tag>`. The pin lives in `startos/manifest/index.ts` at `images.main.source.dockerTag`.
+Bump only to a tag this returns. The pin lives in `startos/manifest/index.ts` at `images.main.source.dockerTag`.
 
 **Postgres** — [`postgres` on Docker Hub](https://hub.docker.com/_/postgres)
 
