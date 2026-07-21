@@ -12,3 +12,7 @@
 ## Using Spliit
 
 Open the **Web UI** interface and create your first group from the landing page. See the upstream documentation linked above for details on splitting methods, reimbursements, and group sharing.
+
+## Uninstalling
+
+Uninstalling Spliit will delete all expense data. Make sure to export any data you want to keep first.

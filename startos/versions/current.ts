@@ -1,13 +1,13 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.19.0:4',
+  version: '1.19.0:5',
   releaseNotes: {
-    en_US: 'Fixes a bug that caused database backups to be empty.',
-    es_ES: 'Corrige un error que provocaba que las copias de seguridad de la base de datos estuvieran vacías.',
-    de_DE: 'Behebt einen Fehler, durch den Datenbank-Backups leer waren.',
-    pl_PL: 'Naprawia błąd powodujący, że kopie zapasowe bazy danych były puste.',
-    fr_FR: 'Corrige un bug qui rendait les sauvegardes de base de données vides.',
+    en_US: 'Internal updates (start-sdk 2.0.x)',
+    es_ES: 'Actualizaciones internas (start-sdk 2.0.x)',
+    de_DE: 'Interne Aktualisierungen (start-sdk 2.0.x)',
+    pl_PL: 'Aktualizacje wewnętrzne (start-sdk 2.0.x)',
+    fr_FR: 'Mises à jour internes (start-sdk 2.0.x)',
   },
   migrations: {
     up: async ({ effects }) => {},
