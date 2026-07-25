@@ -36,20 +36,20 @@ Spliit is a free and open source alternative to Splitwise for sharing expenses w
 
 This package runs **2 containers**:
 
-| Container | Image | Purpose |
-|-----------|-------|---------|
-| main | Built from upstream Dockerfile | Spliit Next.js web application |
-| postgres | `postgres` (Alpine) | PostgreSQL database |
+| Container | Image                          | Purpose                        |
+| --------- | ------------------------------ | ------------------------------ |
+| main      | Built from upstream Dockerfile | Spliit Next.js web application |
+| postgres  | `postgres` (Alpine)            | PostgreSQL database            |
 
 - **Architectures:** x86_64, aarch64
 - **Entrypoint:** Default upstream entrypoints for both containers
 
 ## Volume and Data Layout
 
-| Volume | Mount Point | Contents |
-|--------|-------------|---------|
-| `startos` | — | StartOS-specific files (`store.json` with PostgreSQL password) |
-| `db` | `/var/lib/postgresql` | PostgreSQL data directory |
+| Volume    | Mount Point           | Contents                                                       |
+| --------- | --------------------- | -------------------------------------------------------------- |
+| `startos` | —                     | StartOS-specific files (`store.json` with PostgreSQL password) |
+| `db`      | `/var/lib/postgresql` | PostgreSQL data directory                                      |
 
 ## Installation and First-Run Flow
 
@@ -62,18 +62,18 @@ The app is ready to use immediately — no setup wizard or initial configuration
 
 ## Configuration Management
 
-| StartOS-Managed | Upstream-Managed |
-|-----------------|------------------|
-| PostgreSQL credentials (auto-generated) | All expense groups, members, and settings (via web UI) |
-| Database connection strings | |
-| Telemetry disabled (`NEXT_TELEMETRY_DISABLED=1`) | |
-| PostgreSQL listens on localhost only | |
+| StartOS-Managed                                  | Upstream-Managed                                       |
+| ------------------------------------------------ | ------------------------------------------------------ |
+| PostgreSQL credentials (auto-generated)          | All expense groups, members, and settings (via web UI) |
+| Database connection strings                      |                                                        |
+| Telemetry disabled (`NEXT_TELEMETRY_DISABLED=1`) |                                                        |
+| PostgreSQL listens on localhost only             |                                                        |
 
 ## Network Access and Interfaces
 
-| Interface | ID | Type | Port | Protocol | Purpose |
-|-----------|----|------|------|----------|---------|
-| Web UI | `ui` | ui | 3000 | HTTP | Spliit web application |
+| Interface | ID   | Type | Port | Protocol | Purpose                |
+| --------- | ---- | ---- | ---- | -------- | ---------------------- |
+| Web UI    | `ui` | ui   | 3000 | HTTP     | Spliit web application |
 
 ## Actions (StartOS UI)
 
@@ -87,10 +87,10 @@ None.
 
 ## Health Checks
 
-| Check | Daemon | Method | Grace Period | Messages |
-|-------|--------|--------|--------------|----------|
-| Database | postgres | `pg_isready` command | — | Ready: "PostgreSQL is ready" |
-| Web Interface | spliit | Port listening (3000) | 60 seconds | Ready: "Spliit is ready" |
+| Check         | Daemon   | Method                | Grace Period | Messages                     |
+| ------------- | -------- | --------------------- | ------------ | ---------------------------- |
+| Database      | postgres | `pg_isready` command  | —            | Ready: "PostgreSQL is ready" |
+| Web Interface | spliit   | Port listening (3000) | 60 seconds   | Ready: "Spliit is ready"     |
 
 Daemons start in order: PostgreSQL → Spliit
 
@@ -113,7 +113,7 @@ None.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for build instructions and development workflow.
+Build and development workflow follow the StartOS packaging guide: <https://docs.start9.com/packaging>. Keep `README.md`, `instructions.md`, and `AGENTS.md` in sync with any change to user-visible behavior or package structure.
 
 ---
 
