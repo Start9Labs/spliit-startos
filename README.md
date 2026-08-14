@@ -36,10 +36,10 @@ Spliit is a free and open source alternative to Splitwise for sharing expenses w
 
 This package runs **2 containers**:
 
-| Container | Image                          | Purpose                        |
-| --------- | ------------------------------ | ------------------------------ |
-| main      | Built from upstream Dockerfile | Spliit Next.js web application |
-| postgres  | `postgres` (Alpine)            | PostgreSQL database            |
+| Container | Image                       | Purpose                        |
+| --------- | --------------------------- | ------------------------------ |
+| main      | `ghcr.io/spliit-app/spliit` | Spliit Next.js web application |
+| postgres  | `postgres` (Alpine)         | PostgreSQL database            |
 
 - **Architectures:** x86_64, aarch64
 - **Entrypoint:** Default upstream entrypoints for both containers
@@ -121,7 +121,7 @@ Build and development workflow follow the StartOS packaging guide: <https://docs
 
 ```yaml
 package_id: spliit
-image: built from upstream Dockerfile, postgres (Alpine)
+image: ghcr.io/spliit-app/spliit, postgres (Alpine)
 architectures: [x86_64, aarch64]
 volumes:
   startos: store.json
