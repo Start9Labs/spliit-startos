@@ -4,13 +4,15 @@
 
 # Spliit on StartOS
 
-> **Upstream docs:** <https://github.com/spliit-app/spliit/blob/main/README.md>
->
 > Everything not listed in this document should behave the same as upstream
 > Spliit. If a feature, setting, or behavior is not mentioned here, the
-> upstream documentation is accurate and fully applicable.
+> upstream documentation is accurate and fully applicable — see the
+> Documentation section of `instructions.md` for links.
 
-Spliit is a free and open source alternative to Splitwise for sharing expenses with friends and family. This repository packages it for [StartOS](https://github.com/Start9Labs/start-os).
+[Spliit](https://github.com/spliit-app/spliit) is a shared-expense tracker: create a group, add what people paid for, and it works out who owes whom. This package bundles the PostgreSQL it needs and turns off the telemetry the upstream build ships with.
+
+- **Upstream repo:** <https://github.com/spliit-app/spliit>
+- **Wrapper repo:** <https://github.com/Start9Labs/spliit-startos>
 
 ---
 
@@ -18,102 +20,124 @@ Spliit is a free and open source alternative to Splitwise for sharing expenses w
 
 - [Image and Container Runtime](#image-and-container-runtime)
 - [Volume and Data Layout](#volume-and-data-layout)
-- [Installation and First-Run Flow](#installation-and-first-run-flow)
-- [Configuration Management](#configuration-management)
-- [Network Access and Interfaces](#network-access-and-interfaces)
-- [Actions (StartOS UI)](#actions-startos-ui)
-- [Backups and Restore](#backups-and-restore)
-- [Health Checks](#health-checks)
+- [File Models](#file-models)
 - [Dependencies](#dependencies)
+- [Network Access and Interfaces](#network-access-and-interfaces)
+- [Installation and First-Run Flow](#installation-and-first-run-flow)
+- [Actions](#actions)
+- [Tasks](#tasks)
+- [Health Checks](#health-checks)
+- [Backups and Restore](#backups-and-restore)
 - [Limitations and Differences](#limitations-and-differences)
-- [What Is Unchanged from Upstream](#what-is-unchanged-from-upstream)
-- [Contributing](#contributing)
 - [Quick Reference for AI Consumers](#quick-reference-for-ai-consumers)
 
 ---
 
 ## Image and Container Runtime
 
-This package runs **2 containers**:
+Two upstream images, unmodified.
 
-| Container | Image                       | Purpose                        |
-| --------- | --------------------------- | ------------------------------ |
-| main      | `ghcr.io/spliit-app/spliit` | Spliit Next.js web application |
-| postgres  | `postgres` (Alpine)         | PostgreSQL database            |
+| Property      | Value                                   |
+| ------------- | --------------------------------------- |
+| Images        | `ghcr.io/spliit-app/spliit`, `postgres` |
+| Architectures | x86_64, aarch64                         |
+| Entrypoint    | Each image's own                        |
 
-- **Architectures:** x86_64, aarch64
-- **Entrypoint:** Default upstream entrypoints for both containers
+| Subcontainer   | Daemon     | Starts after | Purpose                                  |
+| -------------- | ---------- | ------------ | ---------------------------------------- |
+| `postgres-sub` | `postgres` | —            | The bundled database, bound to loopback  |
+| `spliit-sub`   | `spliit`   | `postgres`   | The application — the one to `attach` to |
+
+Postgres is started with an explicit loopback listen address, so it is reachable only from inside the service's own network namespace.
 
 ## Volume and Data Layout
 
-| Volume    | Mount Point           | Contents                                                       |
-| --------- | --------------------- | -------------------------------------------------------------- |
-| `startos` | —                     | StartOS-specific files (`store.json` with PostgreSQL password) |
-| `db`      | `/var/lib/postgresql` | PostgreSQL data directory                                      |
+Two volumes, and one of them never enters a container.
 
-## Installation and First-Run Flow
+| Volume    | Mount Point           | Purpose                                      |
+| --------- | --------------------- | -------------------------------------------- |
+| `db`      | `/var/lib/postgresql` | The PostgreSQL data directory                |
+| `startos` | — (host side)         | `store.json`; never mounted into a container |
 
-On install, StartOS:
+The application container mounts nothing at all: every group, expense, and balance lives in the database.
 
-1. Auto-generates a 22-character PostgreSQL password
-2. Stores it in `store.json`
+## File Models
 
-The app is ready to use immediately — no setup wizard or initial configuration needed. Just open the web UI and create your first group.
+One model, holding one value.
 
-## Configuration Management
+| File         | Volume    | Format | Modelled                | Written by |
+| ------------ | --------- | ------ | ----------------------- | ---------- |
+| `store.json` | `startos` | JSON   | Yes — `FileHelper.json` | Install    |
 
-| StartOS-Managed                                  | Upstream-Managed                                       |
-| ------------------------------------------------ | ------------------------------------------------------ |
-| PostgreSQL credentials (auto-generated)          | All expense groups, members, and settings (via web UI) |
-| Database connection strings                      |                                                        |
-| Telemetry disabled (`NEXT_TELEMETRY_DISABLED=1`) |                                                        |
-| PostgreSQL listens on localhost only             |                                                        |
+It holds `postgresPassword`, generated at install. That value is both what the application authenticates to the database with and what the backup's dump uses, so the two are never out of step.
 
-## Network Access and Interfaces
+**Spliit itself takes no configuration file.** Everything it needs arrives as environment built at daemon start — the two database URLs it expects, and one override:
 
-| Interface | ID   | Type | Port | Protocol | Purpose                |
-| --------- | ---- | ---- | ---- | -------- | ---------------------- |
-| Web UI    | `ui` | ui   | 3000 | HTTP     | Spliit web application |
-
-## Actions (StartOS UI)
-
-None.
-
-## Backups and Restore
-
-- **Database:** Backed up via `pg_dump` / restored via `pg_restore` (not raw volume copy)
-- **`startos` volume:** Backed up via rsync (contains `store.json`)
-- **Restore behavior:** Database is restored from dump; `store.json` is restored in place
-
-## Health Checks
-
-| Check         | Daemon   | Method                | Grace Period | Messages                     |
-| ------------- | -------- | --------------------- | ------------ | ---------------------------- |
-| Database      | postgres | `pg_isready` command  | —            | Ready: "PostgreSQL is ready" |
-| Web Interface | spliit   | Port listening (3000) | 60 seconds   | Ready: "Spliit is ready"     |
-
-Daemons start in order: PostgreSQL → Spliit
+| Variable                  | Value | Why it differs from leaving Spliit alone           |
+| ------------------------- | ----- | -------------------------------------------------- |
+| `NEXT_TELEMETRY_DISABLED` | `1`   | The Next.js build otherwise reports usage upstream |
 
 ## Dependencies
 
-None.
+None. PostgreSQL is bundled as a private sidecar rather than declared as a dependency, so it is not shared with any other service.
+
+## Network Access and Interfaces
+
+One interface, serving the whole application.
+
+| Interface | Id   | Type | Port | Description                                           |
+| --------- | ---- | ---- | ---- | ----------------------------------------------------- |
+| Web UI    | `ui` | ui   | 3000 | The Spliit web interface for managing shared expenses |
+
+The port is bound on the `ui-multi` MultiHost and is not masked.
+
+**Spliit has no accounts and no login.** A group is reachable by anyone holding its URL, which is how the upstream app is designed to work — sharing a group means sharing a link. Anyone who can reach a published address can also create groups and list nothing they were not given the URL for. Treat the addresses you publish accordingly.
+
+## Installation and First-Run Flow
+
+Install generates the database password and starts the service. There is no task, no account, and no credential to record.
+
+The first thing to do is create a group in the web UI and share its URL with the people in it. Nothing else is required.
+
+## Actions
+
+None. Spliit is managed entirely through its web interface, so the package adds no action.
+
+## Tasks
+
+None. This package raises no tasks, so the service is never held on a prompt and its ordinary controls are always available.
+
+## Health Checks
+
+Two checks, one per daemon.
+
+| Check      | Displayed       | Method                 | Grace |
+| ---------- | --------------- | ---------------------- | ----- |
+| `postgres` | "Database"      | `pg_isready`           | —     |
+| `spliit`   | "Web Interface" | Port 3000 is listening | 1 min |
+
+The database check reports `loading` rather than failing while it initialises, so a slow first start reads as progress. The application waits on it, so a service stuck starting is usually waiting on the database rather than on Spliit.
+
+The minute of grace covers a first start, where Spliit runs its schema migrations before binding. A failure after that is the application, and the service logs name it — most often the database refusing the connection.
+
+## Backups and Restore
+
+Mixed, and the distinction decides what a restore gives you.
+
+- **`db` is dumped, not copied.** `Backups.withPgDump` takes a logical dump of the Spliit database, authenticating with the password from `store.json`. The volume's files are never captured; a restore replays the dump into a fresh database.
+- **`startos` is copied wholesale** — `store.json` with that password.
+
+The two halves are not independent: the dump is taken with a credential that lives in `store.json`, so a backup missing that file could not be restored.
+
+**Restore is complete** — every group, expense, and balance returns, and the URLs people already have keep working.
 
 ## Limitations and Differences
 
-1. **No riscv64 support** — only x86_64 and aarch64 architectures are supported
-2. **Embedded PostgreSQL** — uses a bundled PostgreSQL instance rather than an external database
-
-## What Is Unchanged from Upstream
-
-- All expense tracking features (groups, members, expenses, reimbursements)
-- Currency support and formatting
-- Group sharing and collaboration
-- Expense categories and splitting methods
-- Settlement calculations
-
-## Contributing
-
-Build and development workflow follow the StartOS packaging guide: <https://docs.start9.com/packaging>. Keep `README.md`, `instructions.md`, and `AGENTS.md` in sync with any change to user-visible behavior or package structure.
+1. **There are no accounts and no login.** A group's URL is its access control, which is upstream's design.
+2. **PostgreSQL is a private sidecar.** It cannot be shared with another service or replaced with an external database.
+3. **Next.js telemetry is disabled.**
+4. **Nothing is configurable.** There is no action, no form, and no setting the package exposes.
+5. **No riscv64 build.** x86_64 and aarch64 only.
 
 ---
 
@@ -121,20 +145,31 @@ Build and development workflow follow the StartOS packaging guide: <https://docs
 
 ```yaml
 package_id: spliit
-image: ghcr.io/spliit-app/spliit, postgres (Alpine)
-architectures: [x86_64, aarch64]
+image: ghcr.io/spliit-app/spliit # plus postgres
+architectures:
+  - x86_64
+  - aarch64
+subcontainers:
+  - postgres-sub # private database, loopback only
+  - spliit-sub # the application; the one to attach to
 volumes:
-  startos: store.json
-  db: /var/lib/postgresql
-ports:
-  ui: 3000
-dependencies: none
+  db: /var/lib/postgresql (in postgres-sub)
+  startos: host side (store.json)
+file_models:
+  - store.json
 startos_managed_env_vars:
-  - POSTGRES_USER
-  - POSTGRES_PASSWORD
-  - POSTGRES_DB
   - POSTGRES_PRISMA_URL
   - POSTGRES_URL_NON_POOLING
   - NEXT_TELEMETRY_DISABLED
+  - POSTGRES_USER # postgres-sub
+  - POSTGRES_PASSWORD # postgres-sub
+  - POSTGRES_DB # postgres-sub
+dependencies: []
+interfaces:
+  ui: { type: ui, port: 3000 }
 actions: []
+tasks: []
+health_checks:
+  - postgres # displayed "Database"
+  - spliit # displayed "Web Interface"
 ```
