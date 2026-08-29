@@ -9,7 +9,7 @@
 > upstream documentation is accurate and fully applicable — see the
 > Documentation section of `instructions.md` for links.
 
-[Spliit](https://github.com/spliit-app/spliit) is a shared-expense tracker: create a group, add what people paid for, and it works out who owes whom. This package bundles the PostgreSQL it needs and turns off the telemetry the upstream build ships with.
+[Spliit](https://github.com/spliit-app/spliit) is a shared-expense tracker: create a group, add what people paid for, and it works out who owes whom. This package bundles the PostgreSQL it needs and runs the upstream image unmodified.
 
 - **Upstream repo:** <https://github.com/spliit-app/spliit>
 - **Wrapper repo:** <https://github.com/Start9Labs/spliit-startos>
@@ -71,11 +71,11 @@ One model, holding one value.
 
 It holds `postgresPassword`, generated at install. That value is both what the application authenticates to the database with and what the backup's dump uses, so the two are never out of step.
 
-**Spliit itself takes no configuration file.** Everything it needs arrives as environment built at daemon start — the two database URLs it expects, and one override:
+**Spliit itself takes no configuration file.** Everything it needs arrives as environment built at daemon start — the two database URLs it expects, and one more the package pins:
 
-| Variable                  | Value | Why it differs from leaving Spliit alone           |
-| ------------------------- | ----- | -------------------------------------------------- |
-| `NEXT_TELEMETRY_DISABLED` | `1`   | The Next.js build otherwise reports usage upstream |
+| Variable                  | Value | Why the package sets it                                       |
+| ------------------------- | ----- | ------------------------------------------------------------- |
+| `NEXT_TELEMETRY_DISABLED` | `1`   | Telemetry stays off whatever the image's own environment sets |
 
 ## Dependencies
 

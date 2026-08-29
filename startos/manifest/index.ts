@@ -14,7 +14,7 @@ export const manifest = setupManifest({
   images: {
     main: {
       source: {
-        dockerTag: 'ghcr.io/spliit-app/spliit:1.22.0',
+        dockerTag: 'ghcr.io/spliit-app/spliit:1.23.1',
       },
       arch: ['x86_64', 'aarch64'],
     },
