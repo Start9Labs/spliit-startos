@@ -1,63 +1,68 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.22.0:0',
+  version: '1.23.1:0',
   releaseNotes: {
-    en_US: `Updated Spliit to 1.22.0.
+    en_US: `Updated Spliit to 1.23.1.
 
-- Share a group with a QR code, and include notes and history in the JSON export.
-- Added Malaysian Ringgit, Macedonian Denar and Colombian Peso, plus Arabic with right-to-left layout.
-- Fixed currency conversion, which had stopped working after the exchange-rate service moved.
-- Fixed CSV export failing on group names with accented characters, keyboard navigation in the category and currency pickers, and the first day of the week when grouping expenses.
-- Hardened AI receipt extraction and CSV export against malicious input.
+- See your balance across every group at once, and read the group statistics over a date range, with a drill-down into the expenses behind each figure.
+- Settle up in a currency other than the group's own.
+- Spliit can now be installed as an app, keeps its assets available offline, and prompts you when a new version is ready.
+- Group tabs show icons on mobile, and page titles follow the language you picked.
+- Fixed validation errors reported on a whole list of fields never reaching the screen.
+- The upstream image is less than half its former size, so this and later updates download faster.
 
-Existing expenses are corrected automatically on first start; no action is needed.
+The database schema is migrated automatically on first start; no action is needed.
 
-Full notes: https://github.com/spliit-app/spliit/releases`,
-    es_ES: `Spliit actualizado a 1.22.0.
+Full notes: https://github.com/spliit-app/spliit/releases/tag/1.23.0 and https://github.com/spliit-app/spliit/releases/tag/1.23.1`,
+    es_ES: `Spliit actualizado a 1.23.1.
 
-- Comparte un grupo con un código QR e incluye las notas y el historial en la exportación JSON.
-- Añadidos el ringgit malayo, el denar macedonio y el peso colombiano, además del árabe con diseño de derecha a izquierda.
-- Corregida la conversión de divisas, que había dejado de funcionar tras el cambio del servicio de tipos de cambio.
-- Corregidos el fallo de la exportación CSV con nombres de grupo acentuados, la navegación con teclado en los selectores de categoría y divisa, y el primer día de la semana al agrupar gastos.
-- Reforzadas la extracción de recibos con IA y la exportación CSV frente a entradas maliciosas.
+- Consulta tu saldo en todos los grupos a la vez y lee las estadísticas del grupo en un intervalo de fechas, con detalle de los gastos que hay detrás de cada cifra.
+- Salda cuentas en una divisa distinta a la del grupo.
+- Spliit ya se puede instalar como aplicación, mantiene sus recursos disponibles sin conexión y avisa cuando hay una versión nueva.
+- Las pestañas del grupo muestran iconos en el móvil y los títulos de página siguen el idioma elegido.
+- Corregidos los errores de validación de una lista completa de campos, que nunca llegaban a mostrarse.
+- La imagen original ocupa menos de la mitad que antes, así que esta y las siguientes actualizaciones se descargan más rápido.
 
-Los gastos existentes se corrigen automáticamente en el primer arranque; no hay que hacer nada.
+El esquema de la base de datos se migra automáticamente en el primer arranque; no hay que hacer nada.
 
-Notas completas: https://github.com/spliit-app/spliit/releases`,
-    de_DE: `Spliit auf 1.22.0 aktualisiert.
+Notas completas: https://github.com/spliit-app/spliit/releases/tag/1.23.0 y https://github.com/spliit-app/spliit/releases/tag/1.23.1`,
+    de_DE: `Spliit auf 1.23.1 aktualisiert.
 
-- Gruppen per QR-Code teilen und Notizen sowie Verlauf im JSON-Export mit ausgeben.
-- Malaysischer Ringgit, Mazedonischer Denar und Kolumbianischer Peso ergänzt, dazu Arabisch mit Rechts-nach-links-Layout.
-- Währungsumrechnung repariert, die seit dem Wechsel des Wechselkursdienstes nicht mehr funktionierte.
-- Behoben: fehlgeschlagener CSV-Export bei Gruppennamen mit Umlauten, Tastaturnavigation in den Kategorie- und Währungsauswahlen sowie der Wochenbeginn beim Gruppieren von Ausgaben.
-- KI-Belegerkennung und CSV-Export gegen schädliche Eingaben abgesichert.
+- Saldo über alle Gruppen hinweg auf einen Blick, dazu Gruppenstatistiken über einen Zeitraum mit Aufschlüsselung der Ausgaben hinter jedem Wert.
+- Ausgleich in einer anderen Währung als der Gruppenwährung.
+- Spliit lässt sich jetzt als App installieren, hält seine Inhalte offline bereit und weist auf eine neue Version hin.
+- Gruppen-Tabs zeigen auf dem Handy Symbole, und Seitentitel folgen der gewählten Sprache.
+- Behoben: Validierungsfehler zu einer ganzen Feldliste erschienen nie auf dem Bildschirm.
+- Das Upstream-Image ist weniger als halb so groß wie zuvor, dieses und künftige Updates laden also schneller.
 
-Vorhandene Ausgaben werden beim ersten Start automatisch korrigiert; es ist nichts zu tun.
+Das Datenbankschema wird beim ersten Start automatisch migriert; es ist nichts zu tun.
 
-Vollständige Hinweise: https://github.com/spliit-app/spliit/releases`,
-    pl_PL: `Zaktualizowano Spliit do 1.22.0.
+Vollständige Hinweise: https://github.com/spliit-app/spliit/releases/tag/1.23.0 und https://github.com/spliit-app/spliit/releases/tag/1.23.1`,
+    pl_PL: `Zaktualizowano Spliit do 1.23.1.
 
-- Udostępnianie grupy kodem QR oraz eksport notatek i historii w eksporcie JSON.
-- Dodano ringgita malezyjskiego, denara macedońskiego i peso kolumbijskie, a także język arabski z układem od prawej do lewej.
-- Naprawiono przeliczanie walut, które przestało działać po zmianie usługi kursów wymiany.
-- Naprawiono błąd eksportu CSV przy nazwach grup ze znakami diakrytycznymi, nawigację klawiaturą w wyborze kategorii i waluty oraz pierwszy dzień tygodnia przy grupowaniu wydatków.
-- Wzmocniono odczyt paragonów przez AI i eksport CSV pod kątem złośliwych danych wejściowych.
+- Podgląd salda ze wszystkich grup naraz oraz statystyki grupy w wybranym zakresie dat, ze szczegółami wydatków składających się na każdą wartość.
+- Rozliczenie w walucie innej niż waluta grupy.
+- Spliit można teraz zainstalować jako aplikację, działa offline i informuje o nowej wersji.
+- Karty grupy pokazują ikony na telefonie, a tytuły stron są zgodne z wybranym językiem.
+- Naprawiono błędy walidacji dotyczące całej listy pól, które nigdy nie pojawiały się na ekranie.
+- Obraz źródłowy jest ponad dwukrotnie mniejszy niż dotąd, więc ta i kolejne aktualizacje pobierają się szybciej.
 
-Istniejące wydatki są poprawiane automatycznie przy pierwszym uruchomieniu; nic nie trzeba robić.
+Schemat bazy danych jest migrowany automatycznie przy pierwszym uruchomieniu; nic nie trzeba robić.
 
-Pełne informacje: https://github.com/spliit-app/spliit/releases`,
-    fr_FR: `Spliit mis à jour vers 1.22.0.
+Pełne informacje: https://github.com/spliit-app/spliit/releases/tag/1.23.0 oraz https://github.com/spliit-app/spliit/releases/tag/1.23.1`,
+    fr_FR: `Spliit mis à jour vers 1.23.1.
 
-- Partage d'un groupe par QR code, et export des notes et de l'historique dans l'export JSON.
-- Ajout du ringgit malaisien, du denar macédonien et du peso colombien, ainsi que de l'arabe avec mise en page de droite à gauche.
-- Correction de la conversion des devises, qui ne fonctionnait plus depuis le changement de service de taux de change.
-- Corrections de l'export CSV en échec sur les noms de groupe accentués, de la navigation au clavier dans les sélecteurs de catégorie et de devise, et du premier jour de la semaine lors du regroupement des dépenses.
-- Renforcement de l'extraction de reçus par IA et de l'export CSV face aux entrées malveillantes.
+- Consultez votre solde sur l'ensemble des groupes, et lisez les statistiques d'un groupe sur une plage de dates, avec le détail des dépenses derrière chaque chiffre.
+- Remboursez dans une devise autre que celle du groupe.
+- Spliit s'installe désormais comme une application, garde ses ressources disponibles hors ligne et signale l'arrivée d'une nouvelle version.
+- Les onglets de groupe affichent des icônes sur mobile, et les titres de page suivent la langue choisie.
+- Correction des erreurs de validation portant sur une liste de champs entière, qui n'apparaissaient jamais à l'écran.
+- L'image amont fait moins de la moitié de sa taille précédente : cette mise à jour et les suivantes se téléchargent plus vite.
 
-Les dépenses existantes sont corrigées automatiquement au premier démarrage ; aucune action n'est requise.
+Le schéma de la base de données est migré automatiquement au premier démarrage ; aucune action n'est requise.
 
-Notes complètes : https://github.com/spliit-app/spliit/releases`,
+Notes complètes : https://github.com/spliit-app/spliit/releases/tag/1.23.0 et https://github.com/spliit-app/spliit/releases/tag/1.23.1`,
   },
   migrations: {
     up: async ({ effects }) => {},
