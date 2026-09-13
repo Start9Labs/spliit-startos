@@ -95,9 +95,9 @@ The port is bound on the `ui-multi` MultiHost and is not masked.
 
 ## Installation and First-Run Flow
 
-Install generates the database password and starts the service. There is no task, no account, and no credential to record.
+Install generates the database password. There is no task, no account, and no credential to record.
 
-The first thing to do is create a group in the web UI and share its URL with the people in it. Nothing else is required.
+After installation, start the service and create a group in the web UI. Share its URL with the people in it; nothing else is required.
 
 ## Actions
 
