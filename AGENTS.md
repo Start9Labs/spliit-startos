@@ -18,14 +18,22 @@ Freshly scaffolded? Work the
 guide page, not a file in this repo — read it, don't copy it in.
 
 Keep `README.md` (technical reference for an AI support or administering agent) and
-`instructions.md` (end-user docs) in sync with your changes.
+`instructions.md` (end-user docs) in sync with your changes. This file restates neither:
+whoever changes the package has both, so it carries only what they don't — repo mechanics,
+a change that looks right and is not, where the next thing gets added, a naming trap, a
+build or test invocation particular to this repo.
 
-**Bugs and feature requests are GitHub issues on this repo** — file them as you find them.
+**Fix a defect you spot rather than reporting it** — you have the package open and the
+context to be sure. File **a GitHub issue on this repo** only when the call isn't yours to
+make: you can't pin the cause down, two defensible fixes exist, or it's too large to ride on
+the work in hand. An open issue is a report, not a queue — implement one when you're asked
+to or when it's labelled `Approved`, then close it with `Closes #<n>`.
+
 Don't record work in the repo instead: no `TODO.md`, no `NOTES.md`, no `PLAN.md`. What you
 verified, tried, and decided belongs in the commit message and the PR body.
 
 ## This repo
 
-- **Postgres is started with an explicit `listen_addresses=127.0.0.1`.** It shares the service's network namespace with the app, and nothing else should be able to reach it.
-- **Spliit has no accounts.** A group's URL is its only access control — don't document or design around a login that does not exist.
-- **The app container mounts no volume.** All state is in the database; anything that needs to persist belongs there or in `store.json`.
+- **Keep Postgres's `listen_addresses=127.0.0.1`.** Dropping it looks harmless, but the image's default listens beyond the service's own network namespace.
+- **Don't document or design around a login.** Spliit has none; a group's URL is its only access control.
+- **New persistent state goes in the database or `store.json`.** The app container mounts no volume.
