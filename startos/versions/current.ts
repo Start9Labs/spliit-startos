@@ -6,7 +6,6 @@ export const current = VersionInfo.of({
     en_US: `Updated Spliit to 1.30.0 and start-sdk to 3.0.4.
 
 - Expense search now includes notes as well as titles.
-- Recurring expenses retain the documents attached to earlier occurrences.
 - New groups appear in Recent groups immediately after creation.
 - Refreshed interface translations.
 
@@ -16,7 +15,6 @@ Full release notes: https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
     es_ES: `Spliit actualizado a 1.30.0 y start-sdk a 3.0.4.
 
 - La búsqueda de gastos ahora incluye las notas además de los títulos.
-- Los gastos recurrentes conservan los documentos adjuntos a las ocurrencias anteriores.
 - Los grupos nuevos aparecen en Grupos recientes inmediatamente después de crearlos.
 - Traducciones de la interfaz actualizadas.
 
@@ -26,7 +24,6 @@ Notas completas de la versión: https://github.com/spliit-app/spliit/releases/ta
     de_DE: `Spliit auf 1.30.0 und start-sdk auf 3.0.4 aktualisiert.
 
 - Die Ausgabensuche berücksichtigt jetzt neben Titeln auch Notizen.
-- Wiederkehrende Ausgaben behalten die Dokumente früherer Vorkommen.
 - Neue Gruppen erscheinen unmittelbar nach der Erstellung unter den zuletzt verwendeten Gruppen.
 - Übersetzungen der Benutzeroberfläche aktualisiert.
 
@@ -36,7 +33,6 @@ Vollständige Versionshinweise: https://github.com/spliit-app/spliit/releases/ta
     pl_PL: `Zaktualizowano Spliit do 1.30.0 i start-sdk do 3.0.4.
 
 - Wyszukiwanie wydatków obejmuje teraz notatki oprócz tytułów.
-- Wydatki cykliczne zachowują dokumenty dołączone do wcześniejszych wystąpień.
 - Nowe grupy pojawiają się w ostatnich grupach od razu po utworzeniu.
 - Odświeżono tłumaczenia interfejsu.
 
@@ -46,7 +42,6 @@ Pełne informacje o wydaniu: https://github.com/spliit-app/spliit/releases/tag/1
     fr_FR: `Spliit mis à jour vers 1.30.0 et start-sdk vers 3.0.4.
 
 - La recherche de dépenses inclut désormais les notes en plus des titres.
-- Les dépenses récurrentes conservent les documents joints aux occurrences précédentes.
 - Les nouveaux groupes apparaissent dans les groupes récents dès leur création.
 - Traductions de l’interface actualisées.
 
