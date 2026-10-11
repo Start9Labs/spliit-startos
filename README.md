@@ -138,6 +138,7 @@ The two halves are not independent: the dump is taken with a credential that liv
 3. **Next.js telemetry is disabled.**
 4. **Nothing is configurable.** There is no action, no form, and no setting the package exposes.
 5. **No riscv64 build.** x86_64 and aarch64 only.
+6. **Group deletion is disabled.** The upstream feature requires a secret and a scheduled purge call; this package configures neither.
 
 ---
 

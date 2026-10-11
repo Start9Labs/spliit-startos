@@ -1,23 +1,58 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.29.0:1',
+  version: '1.30.0:0',
   releaseNotes: {
-    en_US: `Updated Spliit to 1.29.0 with refreshed interface translations. Full release notes: https://github.com/spliit-app/spliit/releases/tag/1.29.0
+    en_US: `Updated Spliit to 1.30.0 and start-sdk to 3.0.4.
 
-StartOS package improvements.`,
-    es_ES: `Spliit actualizado a 1.29.0 con traducciones de la interfaz actualizadas. Notas completas de la versión: https://github.com/spliit-app/spliit/releases/tag/1.29.0
+- Expense search now includes notes as well as titles.
+- Recurring expenses retain the documents attached to earlier occurrences.
+- New groups appear in Recent groups immediately after creation.
+- Refreshed interface translations.
 
-Mejoras en el paquete de StartOS.`,
-    de_DE: `Spliit auf 1.29.0 mit aktualisierten Übersetzungen der Benutzeroberfläche aktualisiert. Vollständige Versionshinweise: https://github.com/spliit-app/spliit/releases/tag/1.29.0
+The database schema is updated automatically on first start. Group deletion remains disabled in this package.
 
-Verbesserungen am StartOS-Paket.`,
-    pl_PL: `Zaktualizowano Spliit do 1.29.0 z odświeżonymi tłumaczeniami interfejsu. Pełne informacje o wydaniu: https://github.com/spliit-app/spliit/releases/tag/1.29.0
+Full release notes: https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
+    es_ES: `Spliit actualizado a 1.30.0 y start-sdk a 3.0.4.
 
-Ulepszenia pakietu StartOS.`,
-    fr_FR: `Spliit mis à jour vers 1.29.0 avec des traductions de l’interface actualisées. Notes de version complètes : https://github.com/spliit-app/spliit/releases/tag/1.29.0
+- La búsqueda de gastos ahora incluye las notas además de los títulos.
+- Los gastos recurrentes conservan los documentos adjuntos a las ocurrencias anteriores.
+- Los grupos nuevos aparecen en Grupos recientes inmediatamente después de crearlos.
+- Traducciones de la interfaz actualizadas.
 
-Améliorations du paquet StartOS.`,
+El esquema de la base de datos se actualiza automáticamente en el primer arranque. La eliminación de grupos sigue desactivada en este paquete.
+
+Notas completas de la versión: https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
+    de_DE: `Spliit auf 1.30.0 und start-sdk auf 3.0.4 aktualisiert.
+
+- Die Ausgabensuche berücksichtigt jetzt neben Titeln auch Notizen.
+- Wiederkehrende Ausgaben behalten die Dokumente früherer Vorkommen.
+- Neue Gruppen erscheinen unmittelbar nach der Erstellung unter den zuletzt verwendeten Gruppen.
+- Übersetzungen der Benutzeroberfläche aktualisiert.
+
+Das Datenbankschema wird beim ersten Start automatisch aktualisiert. Das Löschen von Gruppen bleibt in diesem Paket deaktiviert.
+
+Vollständige Versionshinweise: https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
+    pl_PL: `Zaktualizowano Spliit do 1.30.0 i start-sdk do 3.0.4.
+
+- Wyszukiwanie wydatków obejmuje teraz notatki oprócz tytułów.
+- Wydatki cykliczne zachowują dokumenty dołączone do wcześniejszych wystąpień.
+- Nowe grupy pojawiają się w ostatnich grupach od razu po utworzeniu.
+- Odświeżono tłumaczenia interfejsu.
+
+Schemat bazy danych jest aktualizowany automatycznie przy pierwszym uruchomieniu. Usuwanie grup pozostaje wyłączone w tym pakiecie.
+
+Pełne informacje o wydaniu: https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
+    fr_FR: `Spliit mis à jour vers 1.30.0 et start-sdk vers 3.0.4.
+
+- La recherche de dépenses inclut désormais les notes en plus des titres.
+- Les dépenses récurrentes conservent les documents joints aux occurrences précédentes.
+- Les nouveaux groupes apparaissent dans les groupes récents dès leur création.
+- Traductions de l’interface actualisées.
+
+Le schéma de la base de données est mis à jour automatiquement au premier démarrage. La suppression de groupes reste désactivée dans ce paquet.
+
+Notes de version complètes : https://github.com/spliit-app/spliit/releases/tag/1.30.0`,
   },
   migrations: {
     up: async ({ effects }) => {},
