@@ -19,6 +19,8 @@
 
 See the upstream documentation linked above for details on splitting methods, reimbursements, and group sharing.
 
+Group deletion is not enabled in this StartOS package. Individual expenses can still be deleted.
+
 ## Uninstalling
 
 Uninstalling Spliit will delete all expense data. Make sure to export any data you want to keep first.
