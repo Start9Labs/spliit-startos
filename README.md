@@ -116,7 +116,7 @@ Two checks, one per daemon.
 | `postgres` | "Database"      | `pg_isready`           | —     |
 | `spliit`   | "Web Interface" | Port 3000 is listening | 1 min |
 
-The database check reports `loading` rather than failing while it initialises, so a slow first start reads as progress. The application waits on it, so a service stuck starting is usually waiting on the database rather than on Spliit.
+The database check reports `starting` rather than failing while it initialises, so a slow first start reads as progress. The application waits on it, so a service stuck starting is usually waiting on the database rather than on Spliit.
 
 The minute of grace covers a first start, where Spliit runs its schema migrations before binding. A failure after that is the application, and the service logs name it — most often the database refusing the connection.
 
