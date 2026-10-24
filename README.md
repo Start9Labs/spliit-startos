@@ -9,7 +9,7 @@
 > upstream documentation is accurate and fully applicable — see the
 > Documentation section of `instructions.md` for links.
 
-[Spliit](https://github.com/spliit-app/spliit) is a shared-expense tracker: create a group, add what people paid for, and it works out who owes whom. This package bundles the PostgreSQL it needs and runs the upstream image unmodified.
+[Spliit](https://github.com/spliit-app/spliit) is a shared-expense tracker: create a group, add what people paid for, and it works out who owes whom. This package bundles the PostgreSQL it needs and runs the upstream image with only its Node runtime updated.
 
 - **Upstream repo:** <https://github.com/spliit-app/spliit>
 - **Wrapper repo:** <https://github.com/Start9Labs/spliit-startos>
@@ -35,7 +35,7 @@
 
 ## Image and Container Runtime
 
-Two upstream images, unmodified.
+Two upstream images. The root `Dockerfile` replaces Spliit's `node` binary with `node:26.12.1-alpine3.24`'s, a temporary layer that comes out once upstream ships an image on Node 26.12.1 or later; Postgres is unmodified.
 
 | Property      | Value                                   |
 | ------------- | --------------------------------------- |
@@ -146,7 +146,7 @@ The two halves are not independent: the dump is taken with a credential that liv
 
 ```yaml
 package_id: spliit
-image: ghcr.io/spliit-app/spliit # plus postgres
+image: ghcr.io/spliit-app/spliit + root Dockerfile (Node runtime) # plus postgres
 architectures:
   - x86_64
   - aarch64

@@ -1,13 +1,14 @@
 import { VersionInfo, IMPOSSIBLE } from '@start9labs/start-sdk'
 
 export const current = VersionInfo.of({
-  version: '1.30.0:1',
+  version: '1.30.0:2',
   releaseNotes: {
-    en_US: 'Performance improvement',
-    es_ES: 'Mejora de rendimiento',
-    de_DE: 'Leistungsverbesserung',
-    pl_PL: 'Poprawa wydajności',
-    fr_FR: 'Amélioration des performances',
+    en_US: 'Includes the October 2026 Node.js security fixes.',
+    es_ES:
+      'Incluye las correcciones de seguridad de Node.js de octubre de 2026.',
+    de_DE: 'Enthält die Node.js-Sicherheitskorrekturen vom Oktober 2026.',
+    pl_PL: 'Zawiera poprawki bezpieczeństwa Node.js z października 2026.',
+    fr_FR: "Inclut les correctifs de sécurité Node.js d'octobre 2026.",
   },
   migrations: {
     up: async ({ effects }) => {},

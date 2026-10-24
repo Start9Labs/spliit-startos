@@ -13,7 +13,7 @@ token=$(curl -fsSL "https://ghcr.io/token?scope=repository:spliit-app/spliit:pul
 curl -fsSL -H "Authorization: Bearer $token" "https://ghcr.io/v2/spliit-app/spliit/tags/list" | jq -r '.tags[]'
 ```
 
-Bump only to a tag this returns. The pin lives in `startos/manifest/index.ts` at `images.main.source.dockerTag`.
+Bump only to a tag this returns. The pin is the `IMAGE` build arg of `images.main` in `startos/manifest/index.ts`, layered by the root `Dockerfile`.
 
 **Postgres** — [`postgres` on Docker Hub](https://hub.docker.com/_/postgres)
 
@@ -25,7 +25,7 @@ We track the `16-alpine` line; only bump within the same major (Postgres major u
 
 ## Applying the bump
 
-**Spliit:** in `startos/manifest/index.ts`, set `images.main.source.dockerTag` to `ghcr.io/spliit-app/spliit:<new version>`.
+**Spliit:** in `startos/manifest/index.ts`, set the `IMAGE` build arg of `images.main` to `ghcr.io/spliit-app/spliit:<new version>`. While the root `Dockerfile` exists, keep it unless the new image's `NODE_VERSION` is 26.12.1 or later; if it is, delete it and put `source: { dockerTag: '<new image>' }` back.
 
 **Postgres:** in `startos/manifest/index.ts`, set `images.postgres.source.dockerTag` to `postgres:<new tag>` (stay on the `16-alpine` line unless intentionally doing a major upgrade).
 
